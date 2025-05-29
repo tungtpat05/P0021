@@ -7,6 +7,8 @@ package service;
 import dto.StudentDTO;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import model.Student;
 
 /**
@@ -17,45 +19,56 @@ public class StudentService {
 
     private ArrayList<Student> listStudent = new ArrayList<>();
 
+    // Setter
     public ArrayList<Student> getListStudent() {
         return listStudent;
     }
 
+    // Getter
     public void setListStudent(ArrayList<Student> listStudent) {
         this.listStudent = listStudent;
     }
 
-    public boolean insertStudent(StudentDTO inputForm) {
+    // Insert a student
+    public boolean insertStudent(StudentDTO studentDTO) {
         for (Student student : listStudent) {
-            //Kiểm tra xem sinh viên với semester và courseName vừa nhập đã tồn tại chưa
-            if (student.getId().equalsIgnoreCase(inputForm.getId())
-                    && student.getCourseName().equalsIgnoreCase(inputForm.getCourseName())
-                    && student.getSemester().equalsIgnoreCase(inputForm.getSemester())) {
+            
+            //Check 1 student can take only 1 courseName in 1 semester
+            if (student.getId().equalsIgnoreCase(studentDTO.getId())
+                    && student.getCourseName().equalsIgnoreCase(studentDTO.getCourseName())
+                    && student.getSemester().equalsIgnoreCase(studentDTO.getSemester())) {
                 return false;
             }
         }
-        listStudent.add(new Student(inputForm.getId(), inputForm.getStudentName(), inputForm.getSemester(), inputForm.getCourseName()));
+        // Add a student to the list
+        listStudent.add(new Student(studentDTO.getId(), studentDTO.getStudentName(), studentDTO.getSemester(), studentDTO.getCourseName()));
         return true;
-//        while(listStudent.size() <10) {
-//            
-//        }
     }
 
-    public ArrayList<Student> findAndSortStudent(String studentName) {
+    // Find and sort student by name
+    public ArrayList<String> findAndSortStudentByName(StudentDTO studentDTO) {
         ArrayList<Student> result = new ArrayList<>();
         for (Student student : listStudent) {
-            if (student.getStudentName().toLowerCase().contains(studentName.toLowerCase())) {
+            if (student.getStudentName().toLowerCase().contains(studentDTO.getStudentName().toLowerCase())) {
                 result.add(student);              
             }
         }
+        
         //Sort student by name (increasing)
         result.sort(Comparator.comparing(Student::getStudentName));
-        return result;
+        
+        // Create ArrayList String to contains info with format in toString()
+        ArrayList<String> finalResult = new ArrayList<>();
+        for(Student student : result) {
+            finalResult.add(student.toString());
+        }
+        return finalResult;
     }
-
-    public boolean updateStudent(String studentID, StudentDTO studentDTO) {
+    
+    // Update student by ID
+    public boolean updateStudent(StudentDTO studentDTO) {
         for(Student student : listStudent) {
-            if(student.getId().equalsIgnoreCase(studentID)) {
+            if(student.getId().equalsIgnoreCase(studentDTO.getId())) {
                 student.setStudentName(studentDTO.getStudentName());
                 student.setSemester(studentDTO.getSemester());
                 student.setCourseName(studentDTO.getCourseName());
@@ -65,9 +78,10 @@ public class StudentService {
         return false;
     }
 
-    public boolean deleteStudent(String studentID) {
+    // Delete student by ID
+    public boolean deleteStudent(StudentDTO studentDTO) {
         for(Student student : listStudent) {
-            if(student.getId().equalsIgnoreCase(studentID)) {
+            if(student.getId().equalsIgnoreCase(studentDTO.getId())) {
                 listStudent.remove(student);
                 return true;
             }
@@ -75,7 +89,27 @@ public class StudentService {
         return false;
     }
 
-    public String reportStudent() {
+    
+    // Report student (Funtion 4 Menu)
+    public Map<String, Map<String, Integer>> reportStudent() {
         
+        // Create a map to store id, course, time regis course
+        Map<String, Map<String, Integer>> result = new HashMap<>();
+        
+        // Iterate through each student in listStudent
+        for (Student student : listStudent) {
+            String id = student.getId();
+            String courseName = student.getCourseName();
+            
+            // Put to map if not exist
+            result.putIfAbsent(id, new HashMap<>());
+            
+            // Take map of each student
+            Map<String, Integer> courseMap = result.get(id);
+            
+            // Update time of each course
+            courseMap.put(courseName, courseMap.getOrDefault(courseName, 0) + 1);
+        }
+        return result;     
     }
 }

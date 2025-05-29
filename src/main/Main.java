@@ -16,56 +16,91 @@ import static utils.Validation.getCourse;
  * @author nguye
  */
 public class Main {
+
     public static void main(String[] args) {
         StudentController studentController = new StudentController();
-        StudentDTO inputForm = new StudentDTO();
+        StudentDTO studentDTO = new StudentDTO();
         Scanner sc = new Scanner(System.in);
-        
-        while(true) {
-            //In ra menu chính
+
+        while (true) {
+            // Display main menu
             studentController.displayMainMenu();
+
+            // Ask user option from menu
             int numberChoice = sc.nextInt();
-            switch(numberChoice) {
-                case 1:
-                    inputForm = inputStudent();
-                    studentController.insertStudent(inputForm);
+            switch (numberChoice) {
+                case 1: // Insert a student
+
+                    studentDTO = inputStudent();
+
+                    // Transport info to controller through DTO
+                    studentController.setInputInfo(studentDTO);
+                    studentController.insertStudent();
                     break;
-                case 2:
-                    studentController.findAndSortStudent(getString("Student name:"));
+                case 2: // Find and Sort by name
+
+                    // Ask for inputing name or a part of name
+                    String name = getString("Name: ");
+                    studentDTO.setStudentName(name);
+
+                    // Transport info to controller through DTO
+                    studentController.setInputInfo(studentDTO);
+
+                    // Call find and sort funtion
+                    studentController.findAndSortStudentByName();
                     break;
-                case 3:
-                    String letterChoice  = getString(MSG_CHOICE_MESSAGE);
-                    if(letterChoice.equalsIgnoreCase("U")) {
-                        studentController.updateStudent(getString("Student ID: "), inputStudentForUpdate());
+                case 3: // Update or Delete by ID
+
+                    // Ask for inputing an ID
+                    String id = getCourse("ID: ");
+
+                    // Message for choosing option Update or Delete
+                    String letterChoice = getString(MSG_CHOICE_MESSAGE);
+                    if (letterChoice.equalsIgnoreCase("U")) {
+                        String updateName = getString("Update name: ");
+                        String updateSemester = getString("Update semester: ");
+                        String updateCourseName = getCourse("Update course name (Java - .Net - C/C++): ");
+
+                        // Set infor for DTO
+                        studentDTO.setId(id);
+                        studentDTO.setStudentName(updateName);
+                        studentDTO.setSemester(updateSemester);
+                        studentDTO.setCourseName(updateCourseName);
+
+                        // Transport info to controller through DTO
+                        studentController.setInputInfo(studentDTO);
+
+                        // Call update funtion
+                        studentController.updateStudent();
                     }
-                    if(letterChoice.equalsIgnoreCase("D")) {
-                        studentController.deleteStudent(getString("Student ID: "));
+                    if (letterChoice.equalsIgnoreCase("D")) {
+                        // Set infor for DTO
+                        studentDTO.setId(id);
+
+                        // Transport info to controller through DTO
+                        studentController.setInputInfo(studentDTO);
+
+                        // Call delete funtion
+                        studentController.deleteStudent();
                     }
-                case 4:
+                case 4: // Report Info
+
+                    // Call report funtion
                     studentController.reportStudent();
                     break;
                 default:
                     System.out.println("Please choice option from 1 to 4!");
                     break;
             }
-            studentController.setInputInfo(inputForm);
         }
     }
-    
+
     public static StudentDTO inputStudent() {
         String id = getString("ID: ");
         String studentName = getString("Name: ");
         String semester = getString("Semester: ");
-        String courseName = getCourse("Course (Java - .Net - C/C++): "); 
-        
+        String courseName = getCourse("Course (Java - .Net - C/C++): ");
+
         return new StudentDTO(id, studentName, semester, courseName);
-    }
-    
-    public static StudentDTO inputStudentForUpdate() {
-        String studentName = getString("Name: ");
-        String semester = getString("Semester: ");
-        String courseName = getCourse("Course (Java - .Net - C/C++): "); 
-        
-        return new StudentDTO(studentName, semester, courseName);
     }
 }

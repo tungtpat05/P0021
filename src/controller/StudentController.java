@@ -6,7 +6,7 @@ package controller;
 
 import dto.StudentDTO;
 import java.util.ArrayList;
-import model.Student;
+import java.util.Map;
 import service.StudentService;
 import view.StudentView;
 
@@ -18,32 +18,60 @@ public class StudentController {
     private StudentDTO studentDTO = new StudentDTO();
     private StudentView studentView = new StudentView();
     private StudentService studentService = new StudentService();
-    private ArrayList<Student> listStudent  = new ArrayList<>();
     
-    public void setInputInfo(StudentDTO inputForm) {
-        this.studentDTO = inputForm;
+    // Take input infor from DTO
+    public void setInputInfo(StudentDTO studentDTO) {
+        this.studentDTO = studentDTO;
     }
     
-    public boolean insertStudent(StudentDTO inputForm) {
-        studentService.insertStudent(inputForm);
+    // Call insert funtion from Service
+    public void insertStudent() {
+        if(studentService.insertStudent(studentDTO)) {
+            studentView.setBody("Success!");
+            studentView.printBody();
+        } else {
+            studentView.setBody("Fail!");
+            studentView.printBody();
+        }
     }
     
-    public boolean findAndSortStudent(String studentName) {
-        studentService.findAndSortStudent(studentName);
+    // Call find and sort function form Service --> display
+    public void findAndSortStudentByName() {
+        ArrayList<String> arrlist = studentService.findAndSortStudentByName(studentDTO);
+        studentView.setArrlist(arrlist);
+        studentView.printArrayList();
     }
     
-    public boolean updateStudent(String studentID, StudentDTO studentDTO) {
-        studentService.updateStudent(studentID);
+    // Call update function form Service
+    public void updateStudent() {
+        if(studentService.updateStudent(studentDTO)) {
+            studentView.setBody("Success!");
+            studentView.printBody();
+        } else {
+            studentView.setBody("ID not existed");
+            studentView.printBody();
+        }
     }
     
-    public boolean deleteStudent(String studentID) {
-        studentService.deleteStudent(studentID);
+    // Call delete function form Service
+    public void deleteStudent() {
+        if(studentService.deleteStudent(studentDTO)) {
+            studentView.setBody("Success!");
+            studentView.printBody();
+        } else {
+            studentView.setBody("ID not existed");
+            studentView.printBody();
+        }
     }
     
+    // Call report function form Service
     public void reportStudent() {
-        studentService.reportStudent();
+        Map<String, Map<String, Integer>> result = studentService.reportStudent();
+        studentView.setMap(result);
+        studentView.printMap();
     }
     
+    // Display main menu
     public void displayMainMenu() {
         studentView.displayMainMenu();
     }

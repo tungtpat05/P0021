@@ -57,6 +57,7 @@ public class Student {
     }
 
     @Override
+    // Use it for display infor in FIND & SORT funtion
     public String toString() {
         return studentName + " | " + semester + " | " +  courseName;
     }

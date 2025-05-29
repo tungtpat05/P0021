@@ -23,7 +23,7 @@ public class Validation {
             if (!s.isEmpty()) {
                 return s.trim();
             } else {
-                return "Please input a string!";
+                System.out.println("Please input a string!");
             }
         }
     }
@@ -38,8 +38,8 @@ public class Validation {
                     || courseName.equalsIgnoreCase(Course.C_CPP.toString())) {
                 return courseName.trim();
             } else {
-                return "Course must be 1 of 3 Java, .Net, C/C++";
-            }
+                System.out.println("Course must be 1 of 3 Java, .Net, C/C++");
+            } 
         }
     }
 
@@ -51,7 +51,7 @@ public class Validation {
             if (s.equalsIgnoreCase("Y") || s.equalsIgnoreCase("N")) {
                 return s;
             } else {
-                return "Please input option Y or N!";
+                System.out.println("Please input option Y or N!");
             }
         }
     }
