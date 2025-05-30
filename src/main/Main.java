@@ -4,10 +4,10 @@
  */
 package main;
 
-import static constants.Message.MSG_CHOICE_MESSAGE;
+import constants.Message;
 import controller.StudentController;
 import dto.StudentDTO;
-import java.util.Scanner;
+import utils.Validation;
 import static utils.Validation.getString;
 import static utils.Validation.getCourse;
 
@@ -20,23 +20,39 @@ public class Main {
     public static void main(String[] args) {
         StudentController studentController = new StudentController();
         StudentDTO studentDTO = new StudentDTO();
-        Scanner sc = new Scanner(System.in);
 
-        while (true) {
+        int numberChoice = 1;
+        while (1 <= numberChoice && numberChoice <= 4) {
             // Display main menu
             studentController.displayMainMenu();
 
             // Ask user option from menu
-            int numberChoice = sc.nextInt();
+            numberChoice = Validation.getInt();
             switch (numberChoice) {
                 case 1: // Insert a student
 
-                    studentDTO = inputStudent();
+                    while (true) {
+                        studentDTO = inputStudent();
 
-                    // Transport info to controller through DTO
-                    studentController.setInputInfo(studentDTO);
-                    studentController.insertStudent();
+                        // Transport info to controller through DTO
+                        studentController.setInputInfo(studentDTO);
+
+                        //Call input function
+                        if (studentController.insertStudent()) {
+                            System.out.println("Success to create!");
+                        } else {
+                            System.err.println("Fail to create!");
+                        }
+
+                        if (studentController.sizeOfStudentList() > 10) {
+                            String letterChoice = Validation.checkYN(constants.Message.MSG_YESNO_MESSAGE);
+                            if(letterChoice.equalsIgnoreCase("N")) {
+                                break;
+                            }
+                        }
+                    }
                     break;
+
                 case 2: // Find and Sort by name
 
                     // Ask for inputing name or a part of name
@@ -46,16 +62,21 @@ public class Main {
                     // Transport info to controller through DTO
                     studentController.setInputInfo(studentDTO);
 
-                    // Call find and sort funtion
-                    studentController.findAndSortStudentByName();
+                    // Call find and sort function
+                    if (studentController.findAndSortStudentByName()) {
+                        System.out.println("");
+                    } else {
+                        System.err.println("Not found!");
+                    }
+
                     break;
                 case 3: // Update or Delete by ID
 
                     // Ask for inputing an ID
-                    String id = getCourse("ID: ");
+                    String id = getString("ID: ");
 
                     // Message for choosing option Update or Delete
-                    String letterChoice = getString(MSG_CHOICE_MESSAGE);
+                    String letterChoice = getString(Message.MSG_UD_MESSAGE);
                     if (letterChoice.equalsIgnoreCase("U")) {
                         String updateName = getString("Update name: ");
                         String updateSemester = getString("Update semester: ");
@@ -70,26 +91,33 @@ public class Main {
                         // Transport info to controller through DTO
                         studentController.setInputInfo(studentDTO);
 
-                        // Call update funtion
-                        studentController.updateStudent();
-                    }
-                    if (letterChoice.equalsIgnoreCase("D")) {
+                        // Call update function
+                        if (studentController.updateStudent()) {
+                            System.out.println("Success to update!");
+                        } else {
+                            System.err.println("ID not existed!");
+                        }
+                    } else if (letterChoice.equalsIgnoreCase("D")) {
                         // Set infor for DTO
                         studentDTO.setId(id);
 
                         // Transport info to controller through DTO
                         studentController.setInputInfo(studentDTO);
 
-                        // Call delete funtion
-                        studentController.deleteStudent();
+                        // Call delete function
+                        if (studentController.deleteStudent()) {
+                            System.out.println("Success to delete!");
+                        } else {
+                            System.err.println("ID not existed!");
+                        }
+                    } else {
+                        System.out.println("Please choose U or D!");
                     }
+                    break;
                 case 4: // Report Info
 
-                    // Call report funtion
+                    // Call report function
                     studentController.reportStudent();
-                    break;
-                default:
-                    System.out.println("Please choice option from 1 to 4!");
                     break;
             }
         }

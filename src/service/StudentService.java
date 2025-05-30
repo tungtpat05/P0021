@@ -4,9 +4,7 @@
  */
 package service;
 
-import dto.StudentDTO;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import model.Student;
@@ -27,66 +25,6 @@ public class StudentService {
     // Getter
     public void setListStudent(ArrayList<Student> listStudent) {
         this.listStudent = listStudent;
-    }
-
-    // Insert a student
-    public boolean insertStudent(StudentDTO studentDTO) {
-        for (Student student : listStudent) {
-            
-            //Check 1 student can take only 1 courseName in 1 semester
-            if (student.getId().equalsIgnoreCase(studentDTO.getId())
-                    && student.getCourseName().equalsIgnoreCase(studentDTO.getCourseName())
-                    && student.getSemester().equalsIgnoreCase(studentDTO.getSemester())) {
-                return false;
-            }
-        }
-        // Add a student to the list
-        listStudent.add(new Student(studentDTO.getId(), studentDTO.getStudentName(), studentDTO.getSemester(), studentDTO.getCourseName()));
-        return true;
-    }
-
-    // Find and sort student by name
-    public ArrayList<String> findAndSortStudentByName(StudentDTO studentDTO) {
-        ArrayList<Student> result = new ArrayList<>();
-        for (Student student : listStudent) {
-            if (student.getStudentName().toLowerCase().contains(studentDTO.getStudentName().toLowerCase())) {
-                result.add(student);              
-            }
-        }
-        
-        //Sort student by name (increasing)
-        result.sort(Comparator.comparing(Student::getStudentName));
-        
-        // Create ArrayList String to contains info with format in toString()
-        ArrayList<String> finalResult = new ArrayList<>();
-        for(Student student : result) {
-            finalResult.add(student.toString());
-        }
-        return finalResult;
-    }
-    
-    // Update student by ID
-    public boolean updateStudent(StudentDTO studentDTO) {
-        for(Student student : listStudent) {
-            if(student.getId().equalsIgnoreCase(studentDTO.getId())) {
-                student.setStudentName(studentDTO.getStudentName());
-                student.setSemester(studentDTO.getSemester());
-                student.setCourseName(studentDTO.getCourseName());
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // Delete student by ID
-    public boolean deleteStudent(StudentDTO studentDTO) {
-        for(Student student : listStudent) {
-            if(student.getId().equalsIgnoreCase(studentDTO.getId())) {
-                listStudent.remove(student);
-                return true;
-            }
-        }
-        return false;
     }
 
     

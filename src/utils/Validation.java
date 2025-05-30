@@ -27,6 +27,18 @@ public class Validation {
             }
         }
     }
+    
+    //Check input for integer
+    public static int getInt() {
+        while(true) {
+            try {
+                int number = Integer.parseInt(sc.nextLine());
+                return number;
+            } catch (Exception e) {
+                System.out.println("Please input an integer!");
+            }
+        }
+    }
 
     //Dành riêng cho courseName vì chỉ có một số course nhất định
     public static String getCourse(String input) {

@@ -10,5 +10,5 @@ package constants;
  */
 public class Message {
     public static final String MSG_YESNO_MESSAGE = "Do you want to continue (Y/N): ";
-    public static final String MSG_CHOICE_MESSAGE = "Do you want to update(U) or delete(D) student: ";
+    public static final String MSG_UD_MESSAGE = "Do you want to update(U) or delete(D) student: ";
 }

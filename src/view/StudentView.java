@@ -60,7 +60,7 @@ public class StudentView {
         for (String id : map.keySet()) {
             Map<String, Integer> courseMap = map.get(id);
             for (String course : courseMap.keySet()) {
-                System.out.println(id + " | " + course + " | " + courseMap.get(course));
+                System.out.println(String.format("%s | %s | %d", id, course, courseMap.get(course)));
             }
         }
     }
@@ -71,5 +71,6 @@ public class StudentView {
         System.out.println("2. Find and Sort");
         System.out.println("3. Update/Delete");
         System.out.println("4. Report");
+        System.out.println("5. Exit");
     }
 }
