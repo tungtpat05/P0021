@@ -39,11 +39,12 @@ public class StudentService {
             String id = student.getId();
             String courseName = student.getCourseName();
             
+            String idAndName = String.format("%s | %s ", id, student.getStudentName());
             // Put to map if not exist
-            result.putIfAbsent(id, new HashMap<>());
+            result.putIfAbsent(idAndName, new HashMap<>());
             
             // Take map of each student
-            Map<String, Integer> courseMap = result.get(id);
+            Map<String, Integer> courseMap = result.get(idAndName);
             
             // Update time of each course
             courseMap.put(courseName, courseMap.getOrDefault(courseName, 0) + 1);
