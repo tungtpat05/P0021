@@ -118,8 +118,17 @@ public class StudentController {
 
     // Call report function form Service
     public void reportStudent() {
+        
+        // Pass list of student to Service
+        studentService.setListStudent(listStudent);
+        
+        //Call report from Service
         Map<String, Map<String, Integer>> result = studentService.reportStudent();
+        
+        //Set value of map for View
         studentView.setMap(result);
+        
+        //Print map info
         studentView.printMap();
     }
 

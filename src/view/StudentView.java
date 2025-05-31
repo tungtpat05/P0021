@@ -57,6 +57,12 @@ public class StudentView {
     
     // Print Map (Use special for Funtion 4)
     public void printMap() {
+        
+        if (map == null || map.isEmpty()) {
+            System.out.println("Map is empty or not initialized.");
+            return;
+        }
+        
         for (String id : map.keySet()) {
             Map<String, Integer> courseMap = map.get(id);
             for (String course : courseMap.keySet()) {

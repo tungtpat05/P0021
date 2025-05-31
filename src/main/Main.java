@@ -44,7 +44,7 @@ public class Main {
                             System.err.println("Fail to create!");
                         }
 
-                        if (studentController.sizeOfStudentList() > 10) {
+                        if (studentController.sizeOfStudentList() > 3) {
                             String letterChoice = Validation.checkYN(constants.Message.MSG_YESNO_MESSAGE);
                             if(letterChoice.equalsIgnoreCase("N")) {
                                 break;
