@@ -8,8 +8,6 @@ import constants.Message;
 import controller.StudentController;
 import dto.StudentDTO;
 import utils.Validation;
-import static utils.Validation.getString;
-import static utils.Validation.getCourse;
 
 /**
  *
@@ -56,7 +54,7 @@ public class Main {
                 case 2: // Find and Sort by name
 
                     // Ask for inputing name or a part of name
-                    String name = getString("Name: ");
+                    String name = Validation.getString("Name: ");
                     studentDTO.setStudentName(name);
 
                     // Transport info to controller through DTO
@@ -73,14 +71,14 @@ public class Main {
                 case 3: // Update or Delete by ID
 
                     // Ask for inputing an ID
-                    String id = getString("ID: ");
+                    String id = Validation.getString("ID: ");
 
                     // Message for choosing option Update or Delete
-                    String letterChoice = getString(Message.MSG_UD_MESSAGE);
+                    String letterChoice = Validation.getString(Message.MSG_UD_MESSAGE);
                     if (letterChoice.equalsIgnoreCase("U")) {
-                        String updateName = getString("Update name: ");
-                        String updateSemester = getString("Update semester: ");
-                        String updateCourseName = getCourse("Update course name (Java - .Net - C/C++): ");
+                        String updateName = Validation.getString("Update name: ");
+                        String updateSemester = Validation.getString("Update semester: ");
+                        String updateCourseName = Validation.getCourse("Update course name (Java - .Net - C/C++): ");
 
                         // Set infor for DTO
                         studentDTO.setId(id);
@@ -124,10 +122,10 @@ public class Main {
     }
 
     public static StudentDTO inputStudent() {
-        String id = getString("ID: ");
-        String studentName = getString("Name: ");
-        String semester = getString("Semester: ");
-        String courseName = getCourse("Course (Java - .Net - C/C++): ");
+        String id = Validation.getString("ID: ");
+        String studentName = Validation.getString("Name: ");
+        String semester = Validation.getString("Semester: ");
+        String courseName = Validation.getCourse("Course (Java - .Net - C/C++): ");
 
         return new StudentDTO(id, studentName, semester, courseName);
     }
