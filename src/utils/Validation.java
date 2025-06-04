@@ -14,6 +14,11 @@ import java.util.Scanner;
 public class Validation {
 
     private static Scanner sc = new Scanner(System.in);
+    
+    //private constructor
+    private Validation() {
+        
+    }
 
     //Dùng để nhập thông tin như id, studentName, semester
     public static String getString(String input) {
