@@ -4,6 +4,7 @@
  */
 package main;
 
+import constants.Course;
 import constants.Message;
 import controller.StudentController;
 import dto.StudentDTO;
@@ -20,7 +21,7 @@ public class Main {
         StudentDTO studentDTO = new StudentDTO();
 
         int numberChoice = 1;
-        while (1 <= numberChoice && numberChoice <= 4) {
+        while (1 <= numberChoice && numberChoice <= 5) {
             // Display main menu
             studentController.displayMainMenu();
 
@@ -78,7 +79,7 @@ public class Main {
                     if (letterChoice.equalsIgnoreCase("U")) {
                         String updateName = Validation.getString("Update name: ");
                         String updateSemester = Validation.getString("Update semester: ");
-                        String updateCourseName = Validation.getCourse("Update course name (Java - .Net - C/C++): ");
+                        Course updateCourseName = Validation.getCourse("Update course name (Java - .Net - C/C++): ");
 
                         // Set infor for DTO
                         studentDTO.setId(id);
@@ -125,7 +126,7 @@ public class Main {
         String id = Validation.getString("ID: ");
         String studentName = Validation.getString("Name: ");
         String semester = Validation.getString("Semester: ");
-        String courseName = Validation.getCourse("Course (Java - .Net - C/C++): ");
+        Course courseName = Validation.getCourse("Course (Java - .Net - C/C++): ");
 
         return new StudentDTO(id, studentName, semester, courseName);
     }

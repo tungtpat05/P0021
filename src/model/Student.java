@@ -4,19 +4,22 @@
  */
 package model;
 
+import constants.Course;
+
 /**
  *
  * @author nguye
  */
 public class Student {
-    private String id, studentName, semester, courseName;
+    private String id, studentName, semester;
+    private Course courseName;
 
     //Default constructor
     public Student() {
     }
 
     //Parameter constructor
-    public Student(String id, String studentName, String semester, String courseName) {
+    public Student(String id, String studentName, String semester, Course courseName) {
         this.id = id;
         this.studentName = studentName;
         this.semester = semester;
@@ -48,11 +51,11 @@ public class Student {
         this.semester = semester;
     }
 
-    public String getCourseName() {
+    public Course getCourseName() {
         return courseName;
     }
 
-    public void setCourseName(String courseName) {
+    public void setCourseName(Course courseName) {
         this.courseName = courseName;
     }
 

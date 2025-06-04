@@ -4,12 +4,15 @@
  */
 package dto;
 
+import constants.Course;
+
 /**
  *
  * @author nguye
  */
 public class StudentDTO {
-    private String id, studentName, semester, courseName;
+    private String id, studentName, semester;
+    private Course courseName;
 
     //Default constructor
     public StudentDTO() {
@@ -17,13 +20,13 @@ public class StudentDTO {
 
     //Parameter constructor
     
-    public StudentDTO(String studentName, String semester, String courseName) {
+    public StudentDTO(String studentName, String semester, Course courseName) {
         this.studentName = studentName;
         this.semester = semester;
         this.courseName = courseName;
     }
 
-    public StudentDTO(String id, String studentName, String semester, String courseName) {
+    public StudentDTO(String id, String studentName, String semester, Course courseName) {
         this.id = id;
         this.studentName = studentName;
         this.semester = semester;
@@ -55,11 +58,11 @@ public class StudentDTO {
         this.semester = semester;
     }
 
-    public String getCourseName() {
+    public Course getCourseName() {
         return courseName;
     }
 
-    public void setCourseName(String courseName) {
+    public void setCourseName(Course courseName) {
         this.courseName = courseName;
     }
 }

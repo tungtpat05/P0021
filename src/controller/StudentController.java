@@ -4,6 +4,7 @@
  */
 package controller;
 
+import constants.Course;
 import dto.StudentDTO;
 import java.util.ArrayList;
 import java.util.Map;
@@ -15,12 +16,16 @@ import view.StudentView;
  *
  * @author nguye
  */
+// MẤY CHỨC NĂNG NHƯ CHECK ID HAY SORT TÁCH HẾT RIÊNG THÀNH HÀM NHÉ AE
+// MẤY CHỨC NĂNG NHƯ CHECK ID HAY SORT TÁCH HẾT RIÊNG THÀNH HÀM NHÉ AE
+// MẤY CHỨC NĂNG NHƯ CHECK ID HAY SORT TÁCH HẾT RIÊNG THÀNH HÀM NHÉ AE
+// T LƯỜI NÊN CỨ ĐỂ VẬY
 public class StudentController {
 
     private StudentDTO studentDTO = new StudentDTO();
     private StudentView studentView = new StudentView();
     private StudentService studentService = new StudentService();
-    ArrayList<Student> listStudent = new ArrayList<>();
+    private ArrayList<Student> listStudent = new ArrayList<>();
 
     // Take input infor from DTO
     public void setInputInfo(StudentDTO studentDTO) {
@@ -33,7 +38,7 @@ public class StudentController {
 
             //Check 1 student can take only 1 courseName in 1 semester
             if (student.getId().equalsIgnoreCase(studentDTO.getId())
-                    && student.getCourseName().equalsIgnoreCase(studentDTO.getCourseName())
+                    && student.getCourseName().toString().equalsIgnoreCase(studentDTO.getCourseName().toString())
                     && student.getSemester().equalsIgnoreCase(studentDTO.getSemester())) {
                 return false;
             }
@@ -123,7 +128,7 @@ public class StudentController {
         studentService.setListStudent(listStudent);
         
         //Call report from Service
-        Map<String, Map<String, Integer>> result = studentService.reportStudent();
+        Map<String, Map<Course, Integer>> result = studentService.reportStudent();
         
         //Set value of map for View
         studentView.setMap(result);

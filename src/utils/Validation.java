@@ -27,10 +27,10 @@ public class Validation {
             }
         }
     }
-    
+
     //Check input for integer
     public static int getInt() {
-        while(true) {
+        while (true) {
             try {
                 int number = Integer.parseInt(sc.nextLine());
                 return number;
@@ -41,17 +41,19 @@ public class Validation {
     }
 
     //Dành riêng cho courseName vì chỉ có một số course nhất định
-    public static String getCourse(String input) {
+    public static Course getCourse(String input) {
         while (true) {
             System.out.print(input);
             String courseName = sc.nextLine();
-            if (courseName.equalsIgnoreCase(Course.JAVA.toString())
-                    || courseName.equalsIgnoreCase(Course.DOT_NET.toString())
-                    || courseName.equalsIgnoreCase(Course.C_CPP.toString())) {
-                return courseName.trim();
+            if (courseName.equalsIgnoreCase(Course.C_CPP.toString())) {
+                return Course.C_CPP;
+            } else if (courseName.equalsIgnoreCase(Course.JAVA.toString())) {
+                return Course.JAVA;
+            } else if (courseName.equalsIgnoreCase(Course.DOT_NET.toString())) {
+                return Course.DOT_NET;
             } else {
                 System.out.println("Course must be 1 of 3 Java, .Net, C/C++");
-            } 
+            }
         }
     }
 
@@ -67,5 +69,5 @@ public class Validation {
             }
         }
     }
-  
+
 }

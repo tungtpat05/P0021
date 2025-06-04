@@ -4,6 +4,7 @@
  */
 package service;
 
+import constants.Course;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,22 +30,22 @@ public class StudentService {
 
     
     // Report student (Funtion 4 Menu)
-    public Map<String, Map<String, Integer>> reportStudent() {
+    public Map<String, Map<Course, Integer>> reportStudent() {
         
         // Create a map to store id, course, time regis course
-        Map<String, Map<String, Integer>> result = new HashMap<>();
+        Map<String, Map<Course, Integer>> result = new HashMap<>();
         
         // Iterate through each student in listStudent
         for (Student student : listStudent) {
             String id = student.getId();
-            String courseName = student.getCourseName();
+            Course courseName = student.getCourseName();
             
             String idAndName = String.format("%s | %s ", id, student.getStudentName());
             // Put to map if not exist
             result.putIfAbsent(idAndName, new HashMap<>());
             
             // Take map of each student
-            Map<String, Integer> courseMap = result.get(idAndName);
+            Map<Course, Integer> courseMap = result.get(idAndName);
             
             // Update time of each course
             courseMap.put(courseName, courseMap.getOrDefault(courseName, 0) + 1);

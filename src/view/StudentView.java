@@ -4,6 +4,7 @@
  */
 package view;
 
+import constants.Course;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class StudentView {
     private String body;
     private ArrayList<String> arrlist = new ArrayList<>();
-    private Map<String, Map<String, Integer>> map = new HashMap<>();
+    private Map<String, Map<Course, Integer>> map = new HashMap<>();
     
     // Setter & Getter
 
@@ -35,11 +36,11 @@ public class StudentView {
         this.arrlist = arrlist;
     }
         
-    public Map<String, Map<String, Integer>> getMap() {
+    public Map<String, Map<Course, Integer>> getMap() {
         return map;
     }
 
-    public void setMap(Map<String, Map<String, Integer>> map) {
+    public void setMap(Map<String, Map<Course, Integer>> map) {
         this.map = map;
     }
     
@@ -64,9 +65,9 @@ public class StudentView {
         }
         
         for (String id : map.keySet()) {
-            Map<String, Integer> courseMap = map.get(id);
-            for (String course : courseMap.keySet()) {
-                System.out.println(String.format("%s | %s | %d", id, course, courseMap.get(course)));
+            Map<Course, Integer> courseMap = map.get(id);
+            for (Course course : courseMap.keySet()) {
+                System.out.println(String.format("%s | %s | %d", id, course.toString(), courseMap.get(course)));
             }
         }
     }
