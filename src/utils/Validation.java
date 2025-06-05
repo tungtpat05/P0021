@@ -49,15 +49,21 @@ public class Validation {
     public static Course getCourse(String input) {
         while (true) {
             System.out.print(input);
-            String courseName = sc.nextLine();
-            if (courseName.equalsIgnoreCase(Course.C_CPP.toString())) {
-                return Course.C_CPP;
-            } else if (courseName.equalsIgnoreCase(Course.JAVA.toString())) {
-                return Course.JAVA;
-            } else if (courseName.equalsIgnoreCase(Course.DOT_NET.toString())) {
-                return Course.DOT_NET;
-            } else {
-                System.out.println("Course must be 1 of 3 Java, .Net, C/C++");
+            String inputCourseName = sc.nextLine();
+//            if (courseName.equalsIgnoreCase(Course.C_CPP.toString())) {
+//                return Course.C_CPP;
+//            } else if (courseName.equalsIgnoreCase(Course.JAVA.toString())) {
+//                return Course.JAVA;
+//            } else if (courseName.equalsIgnoreCase(Course.DOT_NET.toString())) {
+//                return Course.DOT_NET;
+//            } else {
+//                System.out.println("Course must be 1 of 3 Java, .Net, C/C++");
+//            }
+            try {
+                Course courseName = Course.valueOf(inputCourseName.toUpperCase());
+                return courseName;
+            } catch (Exception e) {
+                System.err.println("Invalid course! Course must be 1 of 3 Java, .Net, C/C++");
             }
         }
     }
