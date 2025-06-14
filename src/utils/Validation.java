@@ -14,10 +14,10 @@ import java.util.Scanner;
 public class Validation {
 
     private static Scanner sc = new Scanner(System.in);
-    
+
     //private constructor
     private Validation() {
-        
+
     }
 
     //Dùng để nhập thông tin như id, studentName, semester
@@ -60,8 +60,11 @@ public class Validation {
 //                System.out.println("Course must be 1 of 3 Java, .Net, C/C++");
 //            }
             try {
-                Course courseName = Course.valueOf(inputCourseName.toUpperCase());
-                return courseName;
+                for (Course c : Course.values()) {
+                    if (inputCourseName.equalsIgnoreCase(c.toString())) {
+                        return c;
+                    }
+                }
             } catch (Exception e) {
                 System.err.println("Invalid course! Course must be 1 of 3 Java, .Net, C/C++");
             }
